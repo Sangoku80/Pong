@@ -24,7 +24,7 @@ public class Ball {
 
     public void Update(float DeltaTime)
     {
-        // mouvement TEST
+        // mouvement
         position.x += xSpeed*DeltaTime;
         position.y += ySpeed*DeltaTime;
 
