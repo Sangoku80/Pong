@@ -1,65 +1,59 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 
 public class Ball {
+    public float x, y;
+    public float xDir, yDir;
+    public float speed = 200;
+    public float rayon = 10;
 
-    public int rayon = 10;
-    public Vector2 position;
-    public Circle ball;
-    public float xSpeed = 300;
-    public float ySpeed = 300;
-    public Rectangle rectCollision;
-
-    public Ball()
+    public Ball(OrthographicCamera camera)
     {
-        position = new Vector2(0, 0);
-        ball = new Circle(position.x, position.y, rayon);
-        rectCollision = new Rectangle(position.x-rayon, position.y-rayon, 2*rayon, 2*rayon);
+        this.x = camera.viewportWidth / 2;
+        this.y = camera.viewportHeight / 2;
+        this.xDir = 1;
+        this.yDir = 1;
     }
 
-    public void Update(float DeltaTime)
+    public void Update(float DeltaTime, OrthographicCamera camera)
     {
         // mouvement
-        position.x += xSpeed*DeltaTime;
-        position.y += ySpeed*DeltaTime;
+        x += speed*xDir*DeltaTime;
+        y += speed*yDir*DeltaTime;
 
-        // mise à jour de la position du collide
-        rectCollision.x = position.x-rayon;
-        rectCollision.y = position.y-rayon;
+        // collision avec le joueur et l'ennemi
+        if (x < Main.player.width && y > Main.player.y && y < Main.player.y + Main.player.height) {
+            xDir = 1;
+        }
+
+        if(x > camera.viewportWidth - Main.ennemy.width && y > Main.ennemy.y && y < Main.ennemy.y + Main.ennemy.height)
+        {
+            xDir = -1;
+        }
 
         // collisions avec les bords
-        if (position.x < 0 || position.x > Gdx.graphics.getWidth()) {
-            xSpeed = -xSpeed;
-        }
-        if (position.y < 0 || position.y > Gdx.graphics.getHeight()) {
-            ySpeed = -ySpeed;
+        if (y > camera.viewportHeight - rayon || y <= 0) {
+            yDir *= -1;
         }
 
-        // collision avec le joueur
-        if (Intersector.overlaps(rectCollision, Main.player.paddle))
-        {
-            ySpeed = - ySpeed;
-            xSpeed = - xSpeed;
-            System.out.println("collision détectée");
+        if (x > camera.viewportWidth - rayon || x <= 0) {
+            xDir *= -1;
         }
 
     }
 
-    public void Draw(ShapeRenderer shapeRenderer)
+    public void Draw(ShapeRenderer shapeRenderer, OrthographicCamera camera)
     {
 
         // mise à jour de la balle et de son collide
-        Update(Gdx.graphics.getDeltaTime());
+        Update(Gdx.graphics.getDeltaTime(), camera);
 
         // dessin de la balle
         shapeRenderer.setColor(1,1,1,1);
-        shapeRenderer.circle(position.x, position.y, ball.radius);
-
+        shapeRenderer.circle(x, y, rayon);
+        System.out.println(x);
     }
 }

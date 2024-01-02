@@ -1,12 +1,11 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 
 public class Ennemy extends Paddle{
 
-    public Ennemy() {
-        super(new Vector2(Gdx.graphics.getWidth()- (20+15), (float) Gdx.graphics.getHeight() /2));
+    public Ennemy(OrthographicCamera camera) {
+        super((int) (camera.viewportWidth-20), (int) (camera.viewportHeight/2));
     }
 
     @Override

@@ -4,18 +4,14 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.utils.ScreenUtils;
-
-import java.awt.*;
 
 public class Main extends ApplicationAdapter {
 
 	private ShapeRenderer shapeRenderer;
 	public static Player player;
 	private OrthographicCamera camera;
-	public Ennemy ennemy;
+	public static Ennemy ennemy;
     public Ball ball;
 	
 	@Override
@@ -29,13 +25,13 @@ public class Main extends ApplicationAdapter {
 		shapeRenderer = new ShapeRenderer();
 
 		// création du joueur
-		player = new Player();
+		player = new Player(camera);
 
 		// création de l'ennemi
-		ennemy = new Ennemy();
+		ennemy = new Ennemy(camera);
 
         // création de la balle
-        ball = new Ball();
+        ball = new Ball(camera);
 	}
 
 	@Override
@@ -51,18 +47,18 @@ public class Main extends ApplicationAdapter {
 		// shapeRenderer
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
-		// dessin du joueur
-		shapeRenderer.setColor(1, 1, 1, 1);
-		player.Draw(shapeRenderer);
-
-		// dessin de l'ennemi
-		ennemy.Draw(shapeRenderer);
-
 		// dessin du décor
 		Decor(shapeRenderer);
 
+        // dessin du joueur
+        shapeRenderer.setColor(1, 1, 1, 1);
+        player.Draw(shapeRenderer);
+
+        // dessin de l'ennemi
+        ennemy.Draw(shapeRenderer);
+
         // dessin de la balle
-        ball.Draw(shapeRenderer);
+        ball.Draw(shapeRenderer, camera);
 
 		// fin shapeRenderer
 		shapeRenderer.end();

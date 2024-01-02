@@ -2,11 +2,11 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 
 public class Player extends Paddle{
-    public Player() {
-        super(new Vector2(20, (float) Gdx.graphics.getHeight() /2));
+    public Player(OrthographicCamera camera) {
+        super(0, (int) (camera.viewportHeight / 2));
     }
 
     @Override
@@ -15,18 +15,18 @@ public class Player extends Paddle{
         // inputs
         if(Gdx.input.isKeyPressed(Input.Keys.UP))
         {
-            if((position.y + this.height) < Gdx.graphics.getHeight())
+            if((this.y + this.height) < Gdx.graphics.getHeight())
             {
-                position.y += deltaTime*speed;
+                this.y += (int) (deltaTime*speed);
 
             }
         }
 
-        if(position.y > 0)
+        if(y > 0)
         {
             if(Gdx.input.isKeyPressed((Input.Keys.DOWN)))
             {
-                position.y -= deltaTime*speed;
+                this.y -= (int) (deltaTime*speed);
             }
         }
     }
