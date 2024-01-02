@@ -48,7 +48,7 @@ public class Ball {
     public void Draw(ShapeRenderer shapeRenderer, OrthographicCamera camera)
     {
 
-        // mise à jour de la balle et de son collide
+        // mise à jour de la balle
         Update(Gdx.graphics.getDeltaTime(), camera);
 
         // dessin de la balle
