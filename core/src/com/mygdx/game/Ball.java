@@ -27,11 +27,13 @@ public class Ball {
         // collision avec le joueur et l'ennemi
         if (x < Main.player.width && y > Main.player.y && y < Main.player.y + Main.player.height) {
             xDir = 1;
+            Main.score += 1;
         }
 
         if(x > camera.viewportWidth - Main.ennemy.width && y > Main.ennemy.y && y < Main.ennemy.y + Main.ennemy.height)
         {
             xDir = -1;
+            Main.score += 1;
         }
 
         // collisions avec les bords

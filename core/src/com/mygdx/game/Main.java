@@ -3,15 +3,20 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class Main extends ApplicationAdapter {
 
 	private ShapeRenderer shapeRenderer;
+	private BitmapFont font;
+	private SpriteBatch batch;
 	public static Player player;
 	private OrthographicCamera camera;
 	public static Ennemy ennemy;
+	public static int score = 0;
     public Ball ball;
 	
 	@Override
@@ -23,6 +28,12 @@ public class Main extends ApplicationAdapter {
 
 		// création du shapeRenderer
 		shapeRenderer = new ShapeRenderer();
+
+		// création du spriteBatch
+		batch = new SpriteBatch();
+
+		// création du bitmapFont
+		font = new BitmapFont();
 
 		// création du joueur
 		player = new Player(camera);
@@ -44,14 +55,19 @@ public class Main extends ApplicationAdapter {
 		// affichage du shapeRenderer dans le système de coordonnées de la caméra
 		shapeRenderer.setProjectionMatrix(camera.combined);
 
+		// affichage du spriteBatch dans le système de coordonnées de la caméra
+		batch.setProjectionMatrix(camera.combined);
+
 		// shapeRenderer
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
 		// dessin du décor
 		Decor(shapeRenderer);
 
+		// changement de la couleur
+		shapeRenderer.setColor(1, 1, 1, 1);
+
         // dessin du joueur
-        shapeRenderer.setColor(1, 1, 1, 1);
         player.Draw(shapeRenderer);
 
         // dessin de l'ennemi
@@ -62,6 +78,16 @@ public class Main extends ApplicationAdapter {
 
 		// fin shapeRenderer
 		shapeRenderer.end();
+
+		// spriteBatch
+		batch.begin();
+
+		// dessin du score
+		font.draw(batch, "Score: " + score, 100, 100);
+
+		// fin spriteBatch
+		batch.end();
+
 	}
 	
 	@Override
