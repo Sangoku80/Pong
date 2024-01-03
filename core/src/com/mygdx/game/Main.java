@@ -16,7 +16,8 @@ public class Main extends ApplicationAdapter {
 	public static Player player;
 	private OrthographicCamera camera;
 	public static Ennemy ennemy;
-	public static int score = 0;
+	public static int score;
+	public static String message = "";
     public Ball ball;
 	
 	@Override
@@ -83,7 +84,7 @@ public class Main extends ApplicationAdapter {
 		batch.begin();
 
 		// dessin du score
-		font.draw(batch, "Score: " + score, 100, 100);
+		font.draw(batch, message, 100, 100);
 
 		// fin spriteBatch
 		batch.end();
